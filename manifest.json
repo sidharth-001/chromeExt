@@ -1,0 +1,10 @@
+{
+    "name": "helloWorldExt",
+    "description": "a hello world extension",
+    "version": "0.1",
+    "permissions": ["activeTab", "contextMenus"],
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "manifest_version": 2
+}
