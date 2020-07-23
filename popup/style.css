@@ -1,4 +1,13 @@
 body {
     height: 500;
     width: 300;
+    background-color: #696969;
+    color: white;
+}
+
+#download_all{
+    display: block;
+    width: auto;
+    height: 30px;
+    border-radius: 10px;
 }
