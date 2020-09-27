@@ -1,13 +1,19 @@
 body {
-    height: 500;
-    width: 300;
-    background-color: #696969;
+    height: 450px;
+    width: 350px;
+    background-color: #868f96;
     color: white;
 }
 
 #download_all{
     display: block;
-    width: auto;
-    height: 30px;
-    border-radius: 10px;
+    width: 100%;
+    font-size: 22px;
+    border: rgba(0,0,0,0.6) solid;
+    border-radius: 20px;
+}
+
+img{
+    border-radius: 5%;
+    margin: 5px;
 }
