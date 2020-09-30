@@ -3,18 +3,28 @@ var imgNum;
 
 chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, {action: "get_images"}, response => {
-        $('.gallery').html('');
         images = response;
         imgNum = 0;
-        response.map((img) => {
-            if(img) imgNum++;
-        });
-        $('.gallery').append('<h3>Number of images: '+ imgNum +'</h3>');
-        response.map((img) => {
-            var image = new Image();
-            image.src = img;
-            document.body.appendChild(image);
-        });
+        if(!images){
+            $('.gallery').append('<h3>No images were found on this page :(</h3>');
+        }else{
+            $('.gallery').html('');
+            response.map((img) => {
+                if(img) imgNum++;
+            });
+            $('.gallery').append('<h3>Number of images: '+ imgNum +'</h3>');
+            response.map((img) => {
+                if(img){
+                    var image = new Image();
+                    image.src = img;
+                    image.addEventListener('error', () => {
+                        console.log("Err: Error loading the following source <"+img+'>');
+                        image.src = '../resources/badImage.jpg';
+                    });
+                    document.body.appendChild(image);
+                }
+            });
+        }
     });
 });
 
@@ -38,7 +48,6 @@ $(document).on('click', '#download_all', (e) => {
 
 function generateZIP() {
     let l=0;
-    console.log('TEST');
     var zip = new JSZip();
     var zipFilename = "Pictures.zip";
 
@@ -52,10 +61,12 @@ function generateZIP() {
             myData = temp[1];
             zip.file(filename, myData, { base64: true });
         }else{
+            let rejection = false;
             function urlToPromise(url) {
                 return new Promise(function(resolve, reject) {
                     JSZipUtils.getBinaryContent(url, function (err, data) {
                         if(err){
+                            rejection = true;
                             reject(err);
                         }else{
                             resolve(data);
@@ -63,7 +74,7 @@ function generateZIP() {
                     });
                 });
             }
-            zip.file(filename, urlToPromise(images[i]), {binary:true});
+            if(!rejection) zip.file(filename, urlToPromise(images[i]), {binary:true});
         }
         i++;
     }
