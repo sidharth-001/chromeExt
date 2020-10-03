@@ -120,7 +120,7 @@ JSZipUtils.getBinaryContent = function (path, options) {
                         reject(new Error(err));
                     }
                 } else {
-                    reject(new Error("Ajax error for " + path + " : " + this.status + " " + this.statusText));
+                    console.log("Ajax error for " + path + " : " + this.status + " " + this.statusText);
                 }
             }
         };

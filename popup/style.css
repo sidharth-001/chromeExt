@@ -1,19 +1,32 @@
-body {
-    height: 450px;
-    width: 350px;
-    background-color: #868f96;
-    color: white;
+#head{
+    font-size: 30px;
+    color: #C57B57;
+    text-align: center;
+    margin-top: 15px;
+}
+
+body{
+    width: 408px;
+    height: auto;
+    background-color: #F1DEDE;
 }
 
 #download_all{
-    display: block;
-    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    display: inline-block;
+    position: relative;
+    left: 20%;
+    width: 60%;
+    height: 40px;
     font-size: 22px;
-    border: rgba(0,0,0,0.6) solid;
-    border-radius: 20px;
 }
 
 img{
-    border-radius: 5%;
     margin: 5px;
+    width: 120px;
+    height: 120px;
+    border-radius: 5%;
+    border: #CC92C2 solid;
+    border-width: 3px;
 }
