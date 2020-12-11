@@ -4,32 +4,37 @@ var imgNum;
 
 chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, {action: "get_images"}, response => {
-        imgNum = 0;
-        if(!response){
-            $('.gallery').append('<h2>No images were found on this page :(<br>Or the site does not allow web scraping.</h2>');
-        }else{
-            $('.gallery').html('');
-            response.map((img) => {
-                if(img) imgNum++;
-            });
-            if(imgNum){
-                $('.gallery').append('<h2>Number of images: '+ imgNum +'</h2>');
-                response.map((img) => {
-                    if(img){
-                        var image = new Image();
-                        image.src = img;
-                        image.onerror = function(){
-                            badUrls.push(this.src);
-                            this.src = '../resources/badImage.jpg';
-                        }
-                        images.push(image.src);
-                        document.body.appendChild(image);
-                    }
-                });
+        if(!window.chrome.runtime.lastError){
+            imgNum = 0;
+            if(!response){
+                $('.gallery').append('<h2>No images were found on this page :(<br>Or the site does not allow web scraping.</h2>');
             }else{
-                $('.gallery').append('<h2>No images were found on this page :(</h2>');
+                $('.gallery').html('');
+                response.map((img) => {
+                    if(img) imgNum++;
+                });
+                if(imgNum){
+                    $('.gallery').append('<h2>Number of images: '+ imgNum +'</h2>');
+                    response.map((img) => {
+                        if(img){
+                            var image = new Image();
+                            image.src = img;
+                            image.onerror = function(){
+                                badUrls.push(this.src);
+                                this.src = '../resources/badImage.jpg';
+                            }
+                            images.push(image.src);
+                            document.body.appendChild(image);
+                        }
+                    });
+                }else{
+                    $('.gallery').append('<h2>No images were found on this page :(</h2>');
+                }
             }
+        }else{
+            throw "window.chrome.runtime.lastError";
         }
+        
     });
 });
 
