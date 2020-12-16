@@ -20,14 +20,11 @@ chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
                     }
                     image.onclick = function(){
                         var link = document.createElement("a");
-                        //link.id=i;
                         link.download = "image.png";
                         link.href = this.src;
                         link.click();
                     }
                     image.onload = function(){
-                        //console.log(this.width + 'x' + this.height);
-                        //console.log('W*:', this.naturalWidth, 'H*:', this.naturalHeight);
                         if(this.naturalWidth>16 || this.naturalHeight>16){
                             $('.gallery').append(image);
                             images.push(image.src);
@@ -40,36 +37,6 @@ chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
         }
     });
 });
-
-
-//The below code will download all images (unzipped)
-/*
-$(document).on('click', '#download_all', (e) => {
-    let i=0;
-        if(/^data:image/.test(images[i]))  console.log("base64");
-        if(images[0]){
-            var link = document.createElement("a");
-            link.id=i;
-            link.download = "images.png";
-            link.href = images[0];
-            //link.click();
-        }
-});
-*/
-
-//Download single image using chrome api
-/*
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request.action === "download") {
-        for(let i = 0; i < request.data.length; i++){
-            chrome.downloads.download({"url": request.data[i].src});
-        }
-
-        sendResponse("Done");
-    }
-});
-*/
-
 console.log("BAD URIs: ",badUrls);
 
 function generateZIP(){

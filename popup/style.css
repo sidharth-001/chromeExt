@@ -26,7 +26,14 @@ img{
     margin: 5px;
     width: 120px;
     height: 120px;
-    border-radius: 5%;
+    object-fit: cover;
+    border-radius: 10px;
     border: rgba(41,43,44,0.6) solid;
     border-width: 3px;
+}
+
+img:hover{
+    transform: scale(1.1);
+    transition: 1s;
+    border: rgb(92,184,92) solid;
 }
