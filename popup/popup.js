@@ -4,41 +4,43 @@ var imgNum;
 
 chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
     chrome.tabs.sendMessage(tabs[0].id, {action: "get_images"}, response => {
-        if(!window.chrome.runtime.lastError){
-            imgNum = 0;
-            if(!response){
-                $('.gallery').append('<h2>No images were found on this page :(<br>Or the site does not allow web scraping.</h2>');
-            }else{
-                $('.gallery').html('');
-                response.map((img) => {
-                    if(img) imgNum++;
-                });
-                if(imgNum){
-                    $('.gallery').append('<h2>Number of images: '+ imgNum +'</h2>');
-                    response.map((img) => {
-                        if(img){
-                            var image = new Image();
-                            image.src = img;
-                            image.onerror = function(){
-                                badUrls.push(this.src);
-                                this.src = '../resources/badImage.jpg';
-                            }
-                            images.push(image.src);
-                            document.body.appendChild(image);
-                        }
-                    });
-                }else{
-                    $('.gallery').append('<h2>No images were found on this page :(</h2>');
-                }
-            }
+        imgNum = 0;
+        if(!response){
+            $('.gallery').append('<h2>No images were found on this page :(<br>Or the site does not allow web scraping.</h2>');
         }else{
-            throw "window.chrome.runtime.lastError";
+            $('.gallery').html('');
+            response.map((img) => {
+                if(img) imgNum++;
+            });
+            if(imgNum){
+                $('.gallery').append('<h2>Number of images: '+ imgNum +'</h2>');
+                response.map((img) => {
+                    if(img){
+                        var image = new Image();
+                        image.src = img;
+                        image.onerror = function(){
+                            badUrls.push(this.src);
+                            this.src = '../resources/badImage.jpg';
+                        }
+                        image.onload = function(){
+                            console.log(this.width + 'x' + this.height);
+                            console.log('W*:', this.naturalWidth, 'H*:', this.naturalHeight);
+                            if(this.naturalWidth>16 || this.naturalHeight>16){
+                                $('.gallery').append(image);
+                                images.push(image.src);
+                            }
+                        }
+                    }
+                });
+            }else{
+                $('.gallery').append('<h2>No images were found on this page :(</h2>');
+            }
         }
-        
     });
 });
 
-//The below code will download all images (unzipped)\
+
+//The below code will download all images (unzipped)
 /*
 $(document).on('click', '#download_all', (e) => {
     let i=0;
@@ -50,6 +52,19 @@ $(document).on('click', '#download_all', (e) => {
             link.href = images[0];
             //link.click();
         }
+});
+*/
+
+//Download single image using chrome api
+/*
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "download") {
+        for(let i = 0; i < request.data.length; i++){
+            chrome.downloads.download({"url": request.data[i].src});
+        }
+
+        sendResponse("Done");
+    }
 });
 */
 

@@ -1,6 +1,6 @@
 #head{
     font-size: 30px;
-    color: #C57B57;
+    color: #fff;
     text-align: center;
     margin-top: 15px;
 }
@@ -8,7 +8,7 @@
 body{
     width: 408px;
     height: auto;
-    background-color: #F1DEDE;
+    background-color: #6c757e;
 }
 
 #download_all{
@@ -25,8 +25,8 @@ body{
 img{
     margin: 5px;
     width: 120px;
-    height: 120px;
+    height: auto;
     border-radius: 5%;
-    border: #CC92C2 solid;
+    border: rgba(41,43,44,0.6) solid;
     border-width: 3px;
 }
