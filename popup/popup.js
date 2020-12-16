@@ -9,32 +9,34 @@ chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
             $('.gallery').append('<h2>No images were found on this page :(<br>Or the site does not allow web scraping.</h2>');
         }else{
             $('.gallery').html('');
+            $('.gallery').append("<h2>Number of images: <span id='image-num'>0</span></h2>");
             response.map((img) => {
-                if(img) imgNum++;
-            });
-            if(imgNum){
-                $('.gallery').append('<h2>Number of images: '+ imgNum +'</h2>');
-                response.map((img) => {
-                    if(img){
-                        var image = new Image();
-                        image.src = img;
-                        image.onerror = function(){
-                            badUrls.push(this.src);
-                            this.src = '../resources/badImage.jpg';
-                        }
-                        image.onload = function(){
-                            console.log(this.width + 'x' + this.height);
-                            console.log('W*:', this.naturalWidth, 'H*:', this.naturalHeight);
-                            if(this.naturalWidth>16 || this.naturalHeight>16){
-                                $('.gallery').append(image);
-                                images.push(image.src);
-                            }
+                if(img){
+                    var image = new Image();
+                    image.src = img;
+                    image.onerror = function(){
+                        badUrls.push(this.src);
+                        this.src = '../resources/badImage.jpg';
+                    }
+                    image.onclick = function(){
+                        var link = document.createElement("a");
+                        //link.id=i;
+                        link.download = "image.png";
+                        link.href = this.src;
+                        link.click();
+                    }
+                    image.onload = function(){
+                        //console.log(this.width + 'x' + this.height);
+                        //console.log('W*:', this.naturalWidth, 'H*:', this.naturalHeight);
+                        if(this.naturalWidth>16 || this.naturalHeight>16){
+                            $('.gallery').append(image);
+                            images.push(image.src);
+                            imgNum++;
+                            document.getElementById('image-num').innerText = imgNum;
                         }
                     }
-                });
-            }else{
-                $('.gallery').append('<h2>No images were found on this page :(</h2>');
-            }
+                }
+            });
         }
     });
 });
