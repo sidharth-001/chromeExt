@@ -1,5 +1,5 @@
 {
-    "name": "Bulk Image Downloader",
+    "name": "Image Downloader",
     "description": "Download all images on a web page",
     "version": "2.6",
     "permissions": ["<all_urls>", "tabs", "activeTab"],
