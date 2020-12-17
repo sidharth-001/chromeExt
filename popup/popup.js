@@ -9,7 +9,7 @@ chrome.tabs.query({active: true, currentWindow: true}, (tabs) => {
             $('.gallery').append('<h2>No images were found on this page :(<br>Or the site does not allow web scraping.</h2>');
         }else{
             $('.gallery').html('');
-            $('.gallery').append("<h2>Number of images: <span id='image-num'>0</span></h2>");
+            $('.gallery').append("<h3>Total number of images: <span id='image-num'>0</span></h3>");
             response.map((img) => {
                 if(img){
                     var image = new Image();

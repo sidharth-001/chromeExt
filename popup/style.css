@@ -1,14 +1,20 @@
 #head{
-    font-size: 30px;
-    color: #fff;
+    font-size: 35px;
+    color: #00203F;
     text-align: center;
-    margin-top: 15px;
+    background-color: transparent;
+    margin: 0;
+    padding: 20px 0 40px;
 }
 
 body{
     width: 408px;
     height: auto;
-    background-color: #6c757e;
+    background-color: #9CC3D5;
+}
+
+.gallery h3{
+    text-align: center;
 }
 
 #download_all{
@@ -22,18 +28,20 @@ body{
     font-size: 22px;
 }
 
+#download_all:hover{
+    background-color: rgb(92,184,92);
+}
+
 img{
     margin: 5px;
     width: 120px;
     height: 120px;
     object-fit: cover;
     border-radius: 10px;
-    border: rgba(41,43,44,0.6) solid;
+    border: rgba(60, 60, 240, 0.5) solid;
     border-width: 3px;
 }
 
 img:hover{
-    transform: scale(1.1);
-    transition: 1s;
-    border: rgb(92,184,92) solid;
+    border: #00488d solid;
 }
